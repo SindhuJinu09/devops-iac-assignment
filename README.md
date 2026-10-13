@@ -165,6 +165,10 @@ aws logs tail "$(terraform output -raw ecs_log_group_name)" --follow
 
 The live demo was deployed in `ap-south-1`. These captures show two required end-to-end checks: requests reaching both nginx services through the ALB, and a successful file upload through API Gateway with the resulting object listed in S3.
 
+### CI/CD: GitHub Actions
+
+The GitHub Actions workflow completed successfully. It ran Terraform initialization, formatting checks, and validation. [View the successful workflow run](https://github.com/SindhuJinu09/devops-iac-assignment/actions/runs/38410143085).
+
 ### ALB traffic reaches both nginx services
 
 The target health check is healthy, and repeated curl requests return responses from both `nginx-a` and `nginx-b`.
