@@ -22,5 +22,4 @@ Use at least two of these options. Preserve timestamps or command context where 
 | `Screenshot 2026-10-13 190016.png` | Upload API returned HTTP 201 and S3 listed the uploaded object. | 2026-10-13 19:00 IST |
 | `Screenshot 2026-10-13 190155.png` | Additional repeated ALB responses showing both nginx services. | 2026-10-13 19:01 IST |
 | `Screenshot 2026-10-13 190454.png` | Upload API returned HTTP 201 and S3 listed uploaded objects. | 2026-10-13 19:04 IST |
-
 | `ci-github-actions-success.png` | GitHub Actions run showing successful Terraform setup, initialization, formatting, and validation steps. | 2026-10-13 (time not shown) |
