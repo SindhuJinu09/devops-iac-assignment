@@ -169,6 +169,8 @@ The live demo was deployed in `ap-south-1`. These captures show two required end
 
 The GitHub Actions workflow completed successfully. It ran Terraform initialization, formatting checks, and validation. [View the successful workflow run](https://github.com/SindhuJinu09/devops-iac-assignment/actions/runs/38410143085).
 
+![GitHub Actions run completed successfully](evidence/ci-github-actions-success.png)
+
 ### ALB traffic reaches both nginx services
 
 The target health check is healthy, and repeated curl requests return responses from both `nginx-a` and `nginx-b`.
