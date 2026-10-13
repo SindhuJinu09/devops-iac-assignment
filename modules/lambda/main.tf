@@ -10,14 +10,14 @@ resource "aws_cloudwatch_log_group" "lambda" {
 }
 
 resource "aws_lambda_function" "upload" {
-  function_name = "${var.project_name}-upload"
-  role          = var.lambda_role_arn
-  handler       = "upload.lambda_handler"
-  runtime       = "python3.12"
-  filename      = data.archive_file.upload_lambda.output_path
+  function_name    = "${var.project_name}-upload"
+  role             = var.lambda_role_arn
+  handler          = "upload.lambda_handler"
+  runtime          = "python3.12"
+  filename         = data.archive_file.upload_lambda.output_path
   source_code_hash = data.archive_file.upload_lambda.output_base64sha256
-  timeout       = 15
-  memory_size   = 256
+  timeout          = 15
+  memory_size      = 256
   environment {
     variables = {
       UPLOAD_BUCKET = var.upload_bucket_name

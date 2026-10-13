@@ -19,7 +19,7 @@ resource "aws_subnet" "public" {
   cidr_block              = cidrsubnet(var.vpc_cidr, 8, each.value.netnum)
   availability_zone       = each.value.az
   map_public_ip_on_launch = true
-  tags = { Name = "${var.project_name}-public-${each.key}", Tier = "public" }
+  tags                    = { Name = "${var.project_name}-public-${each.key}", Tier = "public" }
 }
 
 resource "aws_subnet" "private_app" {
@@ -30,7 +30,7 @@ resource "aws_subnet" "private_app" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, each.value.netnum)
   availability_zone = each.value.az
-  tags = { Name = "${var.project_name}-private-app-${each.key}", Tier = "application" }
+  tags              = { Name = "${var.project_name}-private-app-${each.key}", Tier = "application" }
 }
 
 resource "aws_subnet" "private_data" {
@@ -41,7 +41,7 @@ resource "aws_subnet" "private_data" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, each.value.netnum)
   availability_zone = each.value.az
-  tags = { Name = "${var.project_name}-private-data-${each.key}", Tier = "data" }
+  tags              = { Name = "${var.project_name}-private-data-${each.key}", Tier = "data" }
 }
 
 resource "aws_internet_gateway" "this" {
