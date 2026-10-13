@@ -1,0 +1,10 @@
+*.tfstate
+*.tfstate.*
+.terraform/
+# Keep .terraform.lock.hcl in version control for reproducible provider selection.
+upload_lambda.zip
+*.zip
+*.log
+aws-debug.txt
+terraform
+.DS_Store
