@@ -64,7 +64,25 @@ Client
 - Private S3 bucket
 - IAM least-privilege Lambda S3 permissions
 - CloudWatch logs for ECS and Lambda
-- GitHub Actions for Terraform fmt/validate/plan
+- GitHub Actions for Terraform init, format, and validate
+
+## Repository structure
+
+```text
+.
+├── .github/workflows/terraform.yml
+├── environments/demo/       # Deployable root module
+├── modules/
+│   ├── alb/
+│   ├── ecs/
+│   ├── iam/
+│   ├── lambda/
+│   ├── networking/
+│   └── storage/
+└── evidence/
+```
+
+The modules hold reusable infrastructure components. `environments/demo/` wires them together and contains the environment-specific provider, variables, and outputs.
 
 ## Prerequisites
 
@@ -81,17 +99,18 @@ aws sts get-caller-identity
 terraform version
 ```
 
-Terraform uses the normal AWS credential chain (for example, environment variables, an AWS CLI profile selected with `AWS_PROFILE`, or an attached role). The configuration does not require a profile named `assignment`. The variable default is `ap-south-2`; this demo was deployed in Mumbai (`ap-south-1`), so pass `-var="aws_region=ap-south-1"` to each Terraform plan, apply, and destroy command when reproducing this deployment. Setting the AWS CLI region alone does not override this Terraform variable.
+Terraform uses the normal AWS credential chain (for example, environment variables, an AWS CLI profile selected with `AWS_PROFILE`, or an attached role). The configuration does not require a profile named `assignment`. Run Terraform commands from `environments/demo/`, which is the root module for this deployment. The variable default is `ap-south-2`; this demo was deployed in Mumbai (`ap-south-1`), so pass `-var="aws_region=ap-south-1"` to each Terraform plan, apply, and destroy command when reproducing this deployment. Setting the AWS CLI region alone does not override this Terraform variable.
 
 The demo creates billable AWS resources, including a NAT Gateway, EC2 capacity, and a public load balancer. Review the plan and remove the stack with `terraform destroy` after collecting evidence. The upload bucket is configured for destruction with the stack and expires objects under `uploads/` after 30 days.
 
 ## Deploy
 
-From the repository root:
+Run Terraform commands from the demo environment directory:
 
 ```bash
+cd environments/demo
 terraform init
-terraform fmt -recursive
+terraform fmt -check -recursive ../..
 terraform validate
 terraform plan -var="aws_region=ap-south-1"
 terraform apply -var="aws_region=ap-south-1"
@@ -187,7 +206,7 @@ The complete set of original screenshots and their descriptions is in [evidence/
 
 ## Destroy
 
-When the demo is complete:
+From `environments/demo/`, when the demo is complete:
 
 ```bash
 terraform destroy -var="aws_region=ap-south-1"

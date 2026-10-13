@@ -21,10 +21,12 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
+        working-directory: environments/demo
         run: terraform init -backend=false
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
       - name: Terraform Validate
+        working-directory: environments/demo
         run: terraform validate

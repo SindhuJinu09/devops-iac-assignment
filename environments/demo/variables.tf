@@ -5,13 +5,13 @@ variable "aws_region" {
 }
 
 variable "project_name" {
-  description = "Project name"
+  description = "Name prefix for the demo resources"
   type        = string
   default     = "kstpl-devops-demo"
 }
 
 variable "environment" {
-  description = "Environment name"
+  description = "Environment name used for default resource tags"
   type        = string
   default     = "demo"
 }
@@ -20,7 +20,6 @@ variable "vpc_cidr" {
   description = "VPC CIDR; this demo allocates six /24 subnets and therefore requires a /16 network."
   type        = string
   default     = "10.20.0.0/16"
-
   validation {
     condition     = cidrnetmask(var.vpc_cidr) == "255.255.0.0"
     error_message = "vpc_cidr must be a valid /16 IPv4 network."

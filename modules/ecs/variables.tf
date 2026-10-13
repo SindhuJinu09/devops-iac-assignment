@@ -1,0 +1,13 @@
+variable "project_name" { type = string }
+variable "aws_region" { type = string }
+variable "instance_type" { type = string }
+variable "desired_ec2_capacity" { type = number }
+variable "nginx_cpu" { type = number }
+variable "nginx_memory" { type = number }
+variable "ecs_instance_profile_name" { type = string }
+variable "ecs_security_group_id" { type = string }
+variable "private_app_subnet_ids" { type = list(string) }
+variable "ecs_task_execution_role_arn" { type = string }
+variable "ecs_task_role_arn" { type = string }
+variable "target_group_a_arn" { type = string }
+variable "target_group_b_arn" { type = string }

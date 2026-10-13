@@ -1,6 +1,6 @@
 data "archive_file" "upload_lambda" {
   type        = "zip"
-  source_file = "${path.module}/lambda/upload.py"
+  source_file = "${path.module}/upload.py"
   output_path = "${path.module}/upload_lambda.zip"
 }
 
@@ -11,32 +11,25 @@ resource "aws_cloudwatch_log_group" "lambda" {
 
 resource "aws_lambda_function" "upload" {
   function_name = "${var.project_name}-upload"
-  role          = aws_iam_role.lambda.arn
+  role          = var.lambda_role_arn
   handler       = "upload.lambda_handler"
   runtime       = "python3.12"
-
-  filename         = data.archive_file.upload_lambda.output_path
+  filename      = data.archive_file.upload_lambda.output_path
   source_code_hash = data.archive_file.upload_lambda.output_base64sha256
-
-  timeout     = 15
-  memory_size = 256
-
+  timeout       = 15
+  memory_size   = 256
   environment {
     variables = {
-      UPLOAD_BUCKET = aws_s3_bucket.uploads.bucket
+      UPLOAD_BUCKET = var.upload_bucket_name
       MAX_BYTES     = "5242880"
     }
   }
-
-  depends_on = [
-    aws_cloudwatch_log_group.lambda
-  ]
+  depends_on = [aws_cloudwatch_log_group.lambda]
 }
 
 resource "aws_apigatewayv2_api" "upload" {
   name          = "${var.project_name}-upload-api"
   protocol_type = "HTTP"
-
   cors_configuration {
     allow_methods = ["POST", "OPTIONS"]
     allow_origins = ["*"]
